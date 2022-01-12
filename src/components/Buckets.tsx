@@ -40,12 +40,12 @@ const Buckets: React.FC<BucketProps> = (props) => {
 								x: bucket.x,
 								y: bucket.y,
 								width: bucket.width === undefined ? '320px' : bucket.width,
-								height: bucket.height === undefined ? '200px' : bucket.height,
+								height: bucket.height === undefined ? '240px' : bucket.height,
 							}}
 							enable
-							style={{ background: '#808080' }}
+							style={{ background: '#808080', borderWidth: '2px',borderColor:'#8090f0',borderRadius:'15px', color:'#fff' }}
 							minHeight={200}
-							minWidth={200}
+							minWidth={240}
 							onDragStop={(e, d) => {
 								onPostionChange(bucket.key, d.x, d.y);
 							}}

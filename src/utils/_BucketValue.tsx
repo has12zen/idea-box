@@ -13,8 +13,8 @@ export default _BucketValue;
 const defaultBucket:_BucketValue={
 	key: '',
 	title: 'Add title',
-	x: 5,
-	y: 5,
+	x: 30,
+	y: 30,
 	creator: '',
 	children: [],
 }

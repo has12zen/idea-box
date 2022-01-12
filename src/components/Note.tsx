@@ -31,7 +31,7 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 					height: note.height,
 				}}
 				enable
-				style={{ ...colour, padding: '10px' }}
+				style={{ ...colour, padding: '10px', borderRadius: '5px' }}
 				minHeight={200}
 				minWidth={200}
 				onDragStop={(e, d) => {
@@ -45,9 +45,9 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 					<Flex p="1">
 						<Edit onEditText={editComponentSave} />
 						<Spacer />
-						<Tooltip label="Delete note" color='red'>
+						<Tooltip label="Delete highlight" color='red'>
 							<IconButton
-								aria-label="Edit note"
+								aria-label="delete highlight"
 								variant="unstyled"
 								color='red.600'
 								onClick={() => {

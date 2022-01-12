@@ -13,9 +13,9 @@ export default _NoteValue;
 
 const defaultNote:_NoteValue={
 	key: '',
-	text: 'Add text',
-	x: 5,
-	y: 5,
+	text: 'Click on edit to add text',
+	x: 20,
+	y: 20,
 	width: '320px',
 	height: '200px',
 	color: '#ff0',
