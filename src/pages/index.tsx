@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Note from 'src/components/Note';
 import { useLocalStorage } from 'src/utils/useLocalStorage';
 import _NoteValue, { defaultNote, colours } from 'src/utils/_NoteValue';
 import { Flex, Box, Heading, Spacer, Button, Tooltip } from '@chakra-ui/react';
-import AddNewBucket from 'src/components/addBucket';
 import Buckets from 'src/components/Buckets';
 import _BucketValue, { defaultBucket } from 'src/utils/_BucketValue';
 import { v4 } from 'uuid';
 import { FaRegStickyNote } from 'react-icons/fa';
+import { BsColumnsGap } from 'react-icons/bs';
+import Example from 'src/components/rds';
+import BucetView from 'src/components/bucketView';
 
 const Home: NextPage = () => {
 	const [_notes, setNotes] = useLocalStorage('notes', []);
 	const [_buckets, setBuckets] = useLocalStorage('buckets', []);
+	const [view, setView] = useState('standard');
 	const [zoom, setZoom] = useState(100);
 	function handleBucketAdd(name: string) {
 		const newList = _buckets.concat({
@@ -23,7 +26,6 @@ const Home: NextPage = () => {
 		});
 		setBuckets(newList);
 	}
-
 	//notes functions
 	function handleAdd() {
 		const randomColour = colours[Math.floor(Math.random() * colours.length)];
@@ -44,6 +46,11 @@ const Home: NextPage = () => {
 			return note;
 		});
 		setNotes(newList);
+	}
+	function toggleView() {
+		if (view === 'standard') {
+			setView('bucket');
+		} else setView('standard');
 	}
 
 	function onBucketUpdate(id: string, props: any) {
@@ -118,30 +125,26 @@ const Home: NextPage = () => {
 							</Button>
 						</Tooltip>
 					</Box>
-					<AddNewBucket onAdd={(bucketname) => handleBucketAdd(bucketname)} />
+					<Box>
+						<Tooltip label="toggle view" aria-label="toggel view">
+							<Button onClick={toggleView}>
+								<BsColumnsGap />
+							</Button>
+						</Tooltip>
+					</Box>
 				</Flex>
 				<Buckets
 					DeleteBucket={onDeleteBucket}
 					buckets={_buckets}
 					UpdateBucket={onBucketUpdate}
 				/>
-					{loopNotes()}
+				{view == 'standard' ? (
+					<Example>{loopNotes()}</Example>
+				) : (
+					<BucetView notes={_notes} onUpdateNote={onNoteUpdate} />
+				)}
 			</main>
-			<footer>
-				{/* <Flex p={6}>
-					<Spacer />
-					<Tooltip label="increase zoom" aria-label="Increase zoom">
-						<Button colorScheme="teal">
-							<AddIcon />
-						</Button>
-					</Tooltip>
-					<Tooltip label="Decrease zoom" aria-label="Decrease zoom">
-						<Button colorScheme="teal">
-							<MinusIcon />
-						</Button>
-					</Tooltip>
-				</Flex> */}
-			</footer>
+			<footer></footer>
 		</div>
 	);
 };

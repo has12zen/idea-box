@@ -16,7 +16,6 @@ import {
 	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react';
-import { FocusLock } from '@chakra-ui/focus-lock';
 
 interface EditComponentProps {
 	onEditText: (text: string) => void;
