@@ -10,7 +10,7 @@ import {
 	Tooltip,
 	IconButton,
 } from '@chakra-ui/react';
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { RiDeleteBin2Line } from 'react-icons/ri';
 import _BucketValue from 'src/utils/_BucketValue';
 import { Rnd } from 'react-rnd';
 
@@ -68,7 +68,7 @@ const Buckets: React.FC<BucketProps> = (props) => {
 											onClick={() => {
 												props.DeleteBucket(bucket.key);
 											}}
-											icon={<DeleteIcon />}
+											icon={<RiDeleteBin2Line />}
 										/>
 									</Tooltip>
 								</Flex>

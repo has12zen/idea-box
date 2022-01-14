@@ -1,24 +1,25 @@
+import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-// import styles from 'public/styles/Home.module.css'
 import Note from 'src/components/Note';
 import { useLocalStorage } from 'src/utils/useLocalStorage';
 import _NoteValue, { defaultNote, colours } from 'src/utils/_NoteValue';
 import { Flex, Box, Heading, Spacer, Button, Tooltip } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
 import AddNewBucket from 'src/components/addBucket';
 import Buckets from 'src/components/Buckets';
-import _BucketValue,{defaultBucket} from 'src/utils/_BucketValue';
+import _BucketValue, { defaultBucket } from 'src/utils/_BucketValue';
 import { v4 } from 'uuid';
+import { FaRegStickyNote } from 'react-icons/fa';
 
 const Home: NextPage = () => {
 	const [_notes, setNotes] = useLocalStorage('notes', []);
 	const [_buckets, setBuckets] = useLocalStorage('buckets', []);
-	function handleBucketAdd(name:string) {
+	const [zoom, setZoom] = useState(100);
+	function handleBucketAdd(name: string) {
 		const newList = _buckets.concat({
 			...defaultBucket,
 			key: v4(),
-			title:name,
+			title: name,
 		});
 		setBuckets(newList);
 	}
@@ -35,6 +36,7 @@ const Home: NextPage = () => {
 	}
 
 	function onNoteUpdate(id: string, props: any) {
+		console.log(props);
 		const newList = _notes.map((note: _NoteValue) => {
 			if (note.key === id) {
 				return { ...note, ...props };
@@ -54,7 +56,6 @@ const Home: NextPage = () => {
 		setBuckets(newList);
 	}
 
-
 	function onPostionChange(id: string, x: number, y: number) {
 		onNoteUpdate(id, { x, y });
 	}
@@ -65,6 +66,10 @@ const Home: NextPage = () => {
 
 	function onEditText(id: string, text: string) {
 		onNoteUpdate(id, { text });
+	}
+
+	function onBucketChange(id: string, bucket: string) {
+		onNoteUpdate(id, { bucket });
 	}
 
 	function onDelete(id: string) {
@@ -87,6 +92,8 @@ const Home: NextPage = () => {
 						onPositionChange={onPostionChange}
 						onScaleChange={onScaleChange}
 						onEditText={onEditText}
+						onBucketChange={onBucketChange}
+						onUpdateNote={onNoteUpdate}
 					/>
 				);
 		});
@@ -105,19 +112,36 @@ const Home: NextPage = () => {
 					</Box>
 					<Spacer />
 					<Box>
-						<Tooltip label="Add highlight" aria-label='Add new highlight'>
+						<Tooltip label="Add highlight" aria-label="Add new highlight">
 							<Button colorScheme="teal" onClick={handleAdd}>
-								<AddIcon />
+								<FaRegStickyNote />
 							</Button>
 						</Tooltip>
 					</Box>
-				<AddNewBucket onAdd={(bucketname)=>handleBucketAdd(bucketname)}/>
+					<AddNewBucket onAdd={(bucketname) => handleBucketAdd(bucketname)} />
 				</Flex>
-				<Buckets DeleteBucket={onDeleteBucket} buckets={_buckets} UpdateBucket={onBucketUpdate}/>
-				{loopNotes()}
+				<Buckets
+					DeleteBucket={onDeleteBucket}
+					buckets={_buckets}
+					UpdateBucket={onBucketUpdate}
+				/>
+					{loopNotes()}
 			</main>
-
-			<footer></footer>
+			<footer>
+				{/* <Flex p={6}>
+					<Spacer />
+					<Tooltip label="increase zoom" aria-label="Increase zoom">
+						<Button colorScheme="teal">
+							<AddIcon />
+						</Button>
+					</Tooltip>
+					<Tooltip label="Decrease zoom" aria-label="Decrease zoom">
+						<Button colorScheme="teal">
+							<MinusIcon />
+						</Button>
+					</Tooltip>
+				</Flex> */}
+			</footer>
 		</div>
 	);
 };

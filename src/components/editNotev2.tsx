@@ -3,53 +3,54 @@ import { RiEditBoxLine } from 'react-icons/ri';
 import {
 	FormControl,
 	FormLabel,
-	Stack,
 	ButtonGroup,
 	Button,
 	useDisclosure,
-	Popover,
-	PopoverTrigger,
-	PopoverContent,
-	PopoverArrow,
 	Input,
 	Textarea,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 } from '@chakra-ui/react';
 import { FocusLock } from '@chakra-ui/focus-lock';
 
 interface EditComponentProps {
 	onEditText: (text: string) => void;
 	onEditBucket: (bucket: string) => void;
+	onEditNote: (note: any) => void;
 }
 
 const Edit: React.FC<EditComponentProps> = (props) => {
-	const { onOpen, onClose, isOpen } = useDisclosure();
 	const [note, setNote] = useState('');
 	const [bucket, setBucket] = useState('');
-
 	const firstFieldRef = React.useRef(null);
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
-		<Popover
-			isOpen={isOpen}
-			initialFocusRef={firstFieldRef}
-			onOpen={onOpen}
-			onClose={onClose}
-			placement="right"
-			closeOnBlur={false}
-		>
-			<PopoverTrigger>
-				<Button
-					size="lg"
-					colorScheme="red.500"
-					variant="ghost"
-					style={{ padding: '2px' }}
-				>
-					<RiEditBoxLine />
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent p={5}>
-				<FocusLock persistentFocus={false}>
-					<PopoverArrow />
-					<Stack spacing={4}>
+		<>
+			<Button
+				size="lg"
+				colorScheme="red.500"
+				variant="ghost"
+				onClick={onOpen}
+				style={{ padding: '2px' }}
+			>
+				<RiEditBoxLine />
+			</Button>
+			<Modal
+				isCentered
+				onClose={onClose}
+				isOpen={isOpen}
+				motionPreset="slideInBottom"
+			>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>Edit Highlight</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
 						<FormControl>
 							<FormLabel>Bucket</FormLabel>
 							<Input
@@ -66,16 +67,22 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 								onChange={(event) => setNote(event.currentTarget.value)}
 							/>
 						</FormControl>
+					</ModalBody>
+					<ModalFooter>
 						<ButtonGroup d="flex" justifyContent="flex-end">
-							<Button variant="outline" onClick={onClose}>
+							<Button mr={3} variant="outline" onClick={onClose}>
 								Cancel
 							</Button>
 							<Button
 								onClick={() => {
-									if (note != '') {
+									console.log(note,bucket,'note,bucket');
+									if(note!==''&&bucket!==''){
+										props.onEditNote({text:note,bucket:bucket});
+									}
+									else if (note != '') {
 										props.onEditText(note);
 									}
-									if (bucket != '') {
+									else if (bucket != '') {
 										props.onEditBucket(bucket);
 									}
 									setNote('');
@@ -86,10 +93,10 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 								Save
 							</Button>
 						</ButtonGroup>
-					</Stack>
-				</FocusLock>
-			</PopoverContent>
-		</Popover>
+					</ModalFooter>
+				</ModalContent>
+			</Modal>
+		</>
 	);
 };
 

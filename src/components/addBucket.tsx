@@ -14,7 +14,7 @@ import {
 	FormLabel,
 	Tooltip,
 } from '@chakra-ui/react';
-import { PlusSquareIcon } from '@chakra-ui/icons';
+import {AiFillDelete} from 'react-icons/ai'
 
 interface AddBucketProps {
 	onAdd: (name: string) => void;
@@ -30,7 +30,7 @@ const AddNewBucket: React.FC<AddBucketProps> = (props) => {
 		<>
 			<Tooltip label="Add Bucket" aria-label="Add bucket">
 				<Button onClick={onOpen}>
-					<PlusSquareIcon />
+					<AiFillDelete />
 				</Button>
 			</Tooltip>
 			<Modal
