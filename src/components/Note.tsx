@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Flex, Spacer, Tooltip, Button } from '@chakra-ui/react';
 import { Rnd } from 'react-rnd';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiDeleteBin2Line, RiEditBoxLine } from 'react-icons/ri';
 import _NoteValue from 'src/utils/_NoteValue';
-import Edit from './editNotev2';
-import {overlaps} from 'src/utils/overlap'
+import { overlaps } from 'src/utils/overlap';
 
 interface NoteComponentProps {
 	note: _NoteValue;
@@ -13,6 +12,7 @@ interface NoteComponentProps {
 	onScaleChange: (id: string, width: string, height: string) => void;
 	onUpdateNote: (id: string, props: any) => void;
 	classname?: string;
+	triggerEdit: (id: string) => void;
 }
 
 const Note: React.FC<NoteComponentProps> = (props) => {
@@ -20,7 +20,6 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 	let colour = {
 		background: note.color,
 	};
-
 
 	let renderButton: any = '';
 	if (note.bucket === undefined || note.bucket === '') {
@@ -44,7 +43,7 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 	}
 
 	function checkCollision(e: any, d: any, id: string, bucket: string) {
-		overlaps(id, bucket,props,1);
+		overlaps(id, bucket, props, 1);
 	}
 
 	return (
@@ -79,11 +78,15 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 			>
 				<Box overflow="hidden">
 					<Flex p="1">
-						<Edit
-							onEditNote={(tn)=>props.onUpdateNote(note.key,tn)}
-							note={note.text}
-							bucket={note.bucket?note.bucket:''.trim()}
-						/>
+						<Button
+							size="lg"
+							colorScheme="red.500"
+							variant="ghost"
+							onClick={()=>{props.triggerEdit(note.key)}}
+							style={{ padding: '2px' }}
+						>
+							<RiEditBoxLine />
+						</Button>
 						{renderButton}
 						<Tooltip label="Delete Note">
 							<Button
@@ -115,4 +118,4 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 	);
 };
 
-export default  Note;
+export default Note;

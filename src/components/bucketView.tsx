@@ -73,6 +73,10 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 							padding: '10px',
 							borderRadius: '5px',
 							zIndex: 100,
+							minWidth: '230px',
+							maxWidth: '600px',
+							minHeight: '100px',
+							maxHeight: '400px',
 						}}
 						overflow="hidden"
 						bucket={note.bucket}
@@ -100,11 +104,11 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 		return bucketslist.map((bucket: string, i) => {
 			return (
 				<>
-					<Box backgroundColor={bucket===''?'#fff':'#808080'} className="bucket-bucketView" marginLeft={15} style={{padding:'10px',borderRadius:'15px',height:'fit-content'}}>
+					<Box backgroundColor={bucket===''?'#fff':'#808080'} className="bucket-bucketView" marginLeft={15} style={{padding:'10px',borderRadius:'15px',height:'fit-content', maxWidth:'500px'}}>
 						<Flex p="1">
 							<Spacer />
 							{bucket !== '' ? (
-								<Heading fontSize={'2xl'} fontFamily={'body'}>
+								<Heading fontSize={'2xl'} fontFamily={'body'} overflow='hidden'>
 									{bucket}
 								</Heading>
 							) : (
