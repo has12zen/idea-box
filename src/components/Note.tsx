@@ -53,7 +53,7 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 	}
 
 	function checkCollision(e: any, d: any, id: string, bucket: string) {
-		overlaps(id, bucket,props);
+		overlaps(id, bucket,props,1);
 	}
 
 	return (

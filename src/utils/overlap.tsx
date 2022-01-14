@@ -1,9 +1,32 @@
-function checkOverlapUpdate(w: string, x: string, y: string, id: string,props: any) {
+function checkOverlapUpdate(
+	w: string,
+	x: string,
+	y: string,
+	id: string,
+	props: any
+) {
 	if (w === x && y != '' && w === '') {
 		props.onUpdateNote(id, { bucket: y });
 	}
+	if (w === y && x != '' && w === '') {
+		props.onUpdateNote(id, { bucket: x });
+	}
 }
-function overlaps(id: string, bucket: string,props:any) {
+function chekcOverlap1(
+	w: string,
+	x: string,
+	y: string,
+	id: string,
+	props: any
+) {
+	if (w === x && x !== y) {
+		props.onUpdateNote(id, { bucket: y });
+	}
+	if (w === y && x !== y) {
+		props.onUpdateNote(id, { bucket: x });
+	}
+}
+function overlaps(id: string, bucket: string, props: any, mode: number) {
 	let draggables = document.getElementsByClassName('react-draggable-note');
 	console.log(Array.from(draggables).length);
 	let result = false;
@@ -17,7 +40,9 @@ function overlaps(id: string, bucket: string,props:any) {
 				const rect1 = item.getBoundingClientRect();
 				const rect2 = oItem.getBoundingClientRect();
 				const bucket1 = item.getAttribute('bucket');
+				const b1=bucket1?bucket1:''.trim();
 				const bucket2 = oItem.getAttribute('bucket');
+				const b2=bucket2?bucket2:''.trim();
 				const isInHoriztonalBounds =
 					rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x;
 				const isInVerticalBounds =
@@ -27,20 +52,22 @@ function overlaps(id: string, bucket: string,props:any) {
 				if (result) {
 					// console.table({ bucket,bucket1,bucket2, result}) ;
 					flag = true;
-					checkOverlapUpdate(
-						bucket,
-						bucket1 ? bucket1 : '',
-						bucket2 ? bucket2 : '',
-						id
-						,props
-					);
-					checkOverlapUpdate(
-						bucket,
-						bucket2 ? bucket2 : '',
-						bucket1 ? bucket1 : '',
-						id,
-						props
-					);
+					if (mode == 1)
+						checkOverlapUpdate(
+							bucket.trim(),
+				b1,
+						b2,
+							id,
+							props
+						);
+					else
+						chekcOverlap1(
+							bucket.trim(),
+							b1,
+							b2,
+							id,
+							props
+						);
 					break;
 				}
 			}
@@ -50,4 +77,4 @@ function overlaps(id: string, bucket: string,props:any) {
 	return false;
 }
 
-export {overlaps, checkOverlapUpdate};
+export { overlaps, checkOverlapUpdate };

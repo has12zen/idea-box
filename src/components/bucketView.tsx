@@ -41,13 +41,13 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 	const [_buck, setBuck] = useState('');
 	notes.map((note) => {
 		if (note.bucket !== undefined) {
-			if (!bucketslist.includes(note.bucket)) {
-				bucketslist.push(note.bucket);
+			if (!bucketslist.includes(note.bucket.trim())) {
+				bucketslist.push(note.bucket.trim());
 			}
 		}
 	});
 	const dragnote = (id: string, bucket: string) => {
-		overlaps(id, bucket, props);
+		overlaps(id, bucket, props,2);
 		setBuck(bucket);
 	};
 	const childrenLoop = (bucket: string) => {
