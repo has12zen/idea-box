@@ -53,3 +53,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 │       ├── _NoteValue.tsx
 │       └── useLocalStorage.tsx
 ```
+
+## Screen Shots
+
+### Standard view
+
+![standard view](/screenshots/standard.png)
+
+### Group view
+
+![group view](/screenshots/groupview.png)
