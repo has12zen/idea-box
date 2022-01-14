@@ -100,7 +100,7 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 		return bucketslist.map((bucket: string, i) => {
 			return (
 				<>
-					<Box backgroundColor={bucket===''?'#fff':'#808080'} className="bucket-bucketView" marginLeft={15}>
+					<Box backgroundColor={bucket===''?'#fff':'#808080'} className="bucket-bucketView" marginLeft={15} style={{padding:'10px',borderRadius:'15px',height:'fit-content'}}>
 						<Flex p="1">
 							<Spacer />
 							{bucket !== '' ? (

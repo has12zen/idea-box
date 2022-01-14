@@ -92,6 +92,8 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 							onEditBucket={editComponentBucket}
 							onEditText={editComponentSave}
 							onEditNote={onNoteUpdate}
+							note={note.text}
+							bucket={note.bucket?note.bucket:''.trim()}
 						/>
 						{renderButton}
 						<Tooltip label="Delete Note">

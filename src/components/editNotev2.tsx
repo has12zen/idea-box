@@ -21,11 +21,13 @@ interface EditComponentProps {
 	onEditText: (text: string) => void;
 	onEditBucket: (bucket: string) => void;
 	onEditNote: (note: any) => void;
+	note:string;
+	bucket:string;
 }
 
 const Edit: React.FC<EditComponentProps> = (props) => {
-	const [note, setNote] = useState('');
-	const [bucket, setBucket] = useState('');
+	const [note, setNote] = useState(props.note);
+	const [bucket, setBucket] = useState(props.bucket);
 	const firstFieldRef = React.useRef(null);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
@@ -55,15 +57,17 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 							<Input
 								id="bucket"
 								placeholder="Bucket"
-								onChange={(event) => setBucket(event.currentTarget.value)}
+								value={bucket}
+								onChange={(event) => setBucket(event.currentTarget.value.trim())}
 							/>
 						</FormControl>
 						<FormControl>
 							<FormLabel>Note</FormLabel>
 							<Textarea
 								id="note"
+								value={note}
 								placeholder="Note"
-								onChange={(event) => setNote(event.currentTarget.value)}
+								onChange={(event) => setNote(event.currentTarget.value.trim())}
 							/>
 						</FormControl>
 					</ModalBody>
@@ -74,7 +78,7 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 							</Button>
 							<Button
 								onClick={() => {
-									console.log(note,bucket,'note,bucket');
+									// console.log(note,bucket,'note,bucket');
 									if(note!==''&&bucket!==''){
 										props.onEditNote({text:note,bucket:bucket});
 									}
@@ -84,7 +88,6 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 									else if (bucket != '') {
 										props.onEditBucket(bucket);
 									}
-									setNote('');
 									onClose();
 								}}
 								colorScheme="teal"

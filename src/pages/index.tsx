@@ -38,7 +38,7 @@ const Home: NextPage = () => {
 	}
 
 	function onNoteUpdate(id: string, props: any) {
-		console.log(props);
+		// console.log(props);
 		const newList = _notes.map((note: _NoteValue) => {
 			if (note.key === id) {
 				return { ...note, ...props };

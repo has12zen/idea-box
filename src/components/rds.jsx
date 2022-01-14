@@ -28,11 +28,11 @@ const App = (props) => {
 	const selectableItems = useRef([]);
 	useEffect(() => {
 		const elementsContainer = document.getElementById('elements-container');
-    console.log('elementsContainer', elementsContainer);
+    // console.log('elementsContainer', elementsContainer);
 		if (elementsContainer) {
 			Array.from(elementsContainer.childNodes).forEach((item) => {
 				const { left, top, width, height } = item.getBoundingClientRect();
-        console.log('item', item, top, left);
+        // console.log('item', item, top, left);
 				selectableItems.current.push({
 					left,
 					top,
@@ -51,7 +51,7 @@ const App = (props) => {
 					indexesToSelect.push(index);
 				}
 			});
-      console.log('indexesToSelect', indexesToSelect);
+      // console.log('indexesToSelect', indexesToSelect);
 			setSelectedIndexes(indexesToSelect);
 		},
 		[selectableItems]
