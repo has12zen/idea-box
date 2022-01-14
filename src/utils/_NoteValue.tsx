@@ -8,6 +8,7 @@ interface _NoteValue {
 	color: string;
 	creator?:string;
 	bucket?:string;
+	selected?:boolean;
 }
 export default _NoteValue;
 

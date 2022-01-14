@@ -11,9 +11,8 @@ interface NoteComponentProps {
 	onDelete: (id: string) => void;
 	onPositionChange: (id: string, x: number, y: number) => void;
 	onScaleChange: (id: string, width: string, height: string) => void;
-	onEditText: (id: string, text: string) => void;
-	onBucketChange: (id: string, bucket: string) => void;
 	onUpdateNote: (id: string, props: any) => void;
+	classname?: string;
 }
 
 const Note: React.FC<NoteComponentProps> = (props) => {
@@ -22,15 +21,7 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 		background: note.color,
 	};
 
-	const editComponentSave = (text: string) => {
-		props.onEditText(note.key, text);
-	};
-	const editComponentBucket = (bucket: string) => {
-		props.onBucketChange(note.key, bucket);
-	};
-	const onNoteUpdate = (args: any) => {
-		props.onUpdateNote(note.key, args);
-	};
+
 	let renderButton: any = '';
 	if (note.bucket === undefined || note.bucket === '') {
 		renderButton = <Spacer />;
@@ -82,16 +73,14 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 						note.bucket ? note.bucket : ''
 					);
 				}}
-				className="react-draggable-note"
+				className={'react-draggable-note ' + props.classname}
 				bucket={note.bucket?.trim()}
 				data-draggable={true}
 			>
 				<Box overflow="hidden">
 					<Flex p="1">
 						<Edit
-							onEditBucket={editComponentBucket}
-							onEditText={editComponentSave}
-							onEditNote={onNoteUpdate}
+							onEditNote={(tn)=>props.onUpdateNote(note.key,tn)}
 							note={note.text}
 							bucket={note.bucket?note.bucket:''.trim()}
 						/>

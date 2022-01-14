@@ -28,7 +28,7 @@ function chekcOverlap1(
 }
 function overlaps(id: string, bucket: string, props: any, mode: number) {
 	let draggables = document.getElementsByClassName('react-draggable-note');
-	console.log(Array.from(draggables).length);
+	// console.log(Array.from(draggables).length);
 	let result = false;
 	let draggablesLength = Array.from(draggables).length;
 	for (let i = 0; i < draggablesLength; i++) {

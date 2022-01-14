@@ -18,11 +18,9 @@ import {
 } from '@chakra-ui/react';
 
 interface EditComponentProps {
-	onEditText: (text: string) => void;
-	onEditBucket: (bucket: string) => void;
 	onEditNote: (note: any) => void;
-	note:string;
-	bucket:string;
+	note: string;
+	bucket: string;
 }
 
 const Edit: React.FC<EditComponentProps> = (props) => {
@@ -79,14 +77,15 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 							<Button
 								onClick={() => {
 									// console.log(note,bucket,'note,bucket');
-									if(note!==''&&bucket!==''){
-										props.onEditNote({text:note.trim(),bucket:bucket.trim()});
-									}
-									else if (note != '') {
-										props.onEditText(note.trim());
-									}
-									else if (bucket != '') {
-										props.onEditBucket(bucket.trim());
+									if (note !== '' && bucket !== '') {
+										props.onEditNote({
+											text: note.trim(),
+											bucket: bucket.trim(),
+										});
+									} else if (note != '') {
+										props.onEditNote({ text: note.trim() });
+									} else if (bucket != '') {
+										props.onEditNote({ bucket: bucket.trim() });
 									}
 									onClose();
 								}}
