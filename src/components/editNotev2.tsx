@@ -58,7 +58,7 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 								id="bucket"
 								placeholder="Bucket"
 								value={bucket}
-								onChange={(event) => setBucket(event.currentTarget.value.trim())}
+								onChange={(event) => setBucket(event.currentTarget.value)}
 							/>
 						</FormControl>
 						<FormControl>
@@ -67,7 +67,7 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 								id="note"
 								value={note}
 								placeholder="Note"
-								onChange={(event) => setNote(event.currentTarget.value.trim())}
+								onChange={(event) => setNote(event.currentTarget.value)}
 							/>
 						</FormControl>
 					</ModalBody>
@@ -80,13 +80,13 @@ const Edit: React.FC<EditComponentProps> = (props) => {
 								onClick={() => {
 									// console.log(note,bucket,'note,bucket');
 									if(note!==''&&bucket!==''){
-										props.onEditNote({text:note,bucket:bucket});
+										props.onEditNote({text:note.trim(),bucket:bucket.trim()});
 									}
 									else if (note != '') {
-										props.onEditText(note);
+										props.onEditText(note.trim());
 									}
 									else if (bucket != '') {
-										props.onEditBucket(bucket);
+										props.onEditBucket(bucket.trim());
 									}
 									onClose();
 								}}
