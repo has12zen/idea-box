@@ -20,18 +20,17 @@ interface NavigationProps {}
 const Navigation: React.FC<NavigationProps> = (props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { colorMode, toggleColorMode } = useColorMode();
-	const btnRef = React.useRef();
 
 	return (
 		<>
-			<Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+			<Button colorScheme="teal" onClick={onOpen}>
 				<GiHamburgerMenu />
 			</Button>
 			<Drawer
 				isOpen={isOpen}
 				placement="left"
 				onClose={onClose}
-				finalFocusRef={btnRef}
+			
 			>
 				<DrawerOverlay />
 				<DrawerContent>
