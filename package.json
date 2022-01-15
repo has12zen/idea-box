@@ -22,6 +22,7 @@
     "react-draggable": "^4.4.4",
     "react-ds": "^1.13.0",
     "react-icons": "^4.3.1",
+    "react-quick-pinch-zoom": "^4.0.2",
     "react-rnd": "^10.3.5",
     "uuid": "^8.3.2"
   },

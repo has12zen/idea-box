@@ -1,5 +1,12 @@
 import React from 'react';
-import { Box, Flex, Spacer, Tooltip, Button } from '@chakra-ui/react';
+import {
+	Box,
+	Flex,
+	Spacer,
+	Tooltip,
+	Button,
+	useColorMode,
+} from '@chakra-ui/react';
 import { Rnd } from 'react-rnd';
 import { RiDeleteBin2Line, RiEditBoxLine } from 'react-icons/ri';
 import _NoteValue from 'src/utils/_NoteValue';
@@ -21,6 +28,7 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 		background: note.color,
 	};
 
+	const { colorMode, toggleColorMode } = useColorMode();
 	let renderButton: any = '';
 	if (note.bucket === undefined || note.bucket === '') {
 		renderButton = <Spacer />;
@@ -76,13 +84,15 @@ const Note: React.FC<NoteComponentProps> = (props) => {
 				bucket={note.bucket?.trim()}
 				data-draggable={true}
 			>
-				<Box overflow="hidden">
+				<Box overflow="hidden" color={colorMode === 'light' ? '#fff' : '#000'}>
 					<Flex p="1">
 						<Button
 							size="lg"
 							colorScheme="red.500"
 							variant="ghost"
-							onClick={()=>{props.triggerEdit(note.key)}}
+							onClick={() => {
+								props.triggerEdit(note.key);
+							}}
 							style={{ padding: '2px' }}
 						>
 							<RiEditBoxLine />

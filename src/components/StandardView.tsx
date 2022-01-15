@@ -2,17 +2,12 @@
 import {
 	Button,
 	ButtonGroup,
+	Flex,
 	FormControl,
 	FormLabel,
 	Input,
-	Modal,
-	ModalBody,
-	ModalCloseButton,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
 	Textarea,
+	useColorMode,
 	useDisclosure,
 } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
@@ -26,6 +21,11 @@ interface StandardProps {
 	onDelete: (id: string) => void;
 	onUpdateNote: (id: string, data: any) => void;
 	assignNotesToBucket: (selectIndexs: number[], bucket: string) => void;
+	Position: {
+		x: number;
+		y: number;
+		scale: number;
+	};
 }
 
 const StandardView: React.FC<StandardProps> = (props) => {
@@ -40,6 +40,7 @@ const StandardView: React.FC<StandardProps> = (props) => {
 		id: '',
 	});
 	const notes = props.notes;
+	const _pos = props.Position;
 
 	const handleSelectionChange = useCallback((box) => {
 		setSelectionBox(box);
@@ -108,7 +109,7 @@ const StandardView: React.FC<StandardProps> = (props) => {
 				borderRadius: 4,
 				backgroundColor: 'brown',
 				opacity: 0.4,
-				marginTop: 90,
+				marginTop: '90px',
 			},
 		},
 		onSelectionEnd: () => {
@@ -120,16 +121,14 @@ const StandardView: React.FC<StandardProps> = (props) => {
 	});
 	// console.log(props, 'selprops');
 	return (
-		<div className="container" style={{ padding: '50px' }}>
+		<>
 			<DragSelection />
 			<div
-				id="elements-container"
+				className="react-transform-container"
 				style={{
-					display: 'grid',
-					gridTemplateColumns: '100px 100px 100px 100px',
-					gap: '20px 20px',
+					transformOrigin: '0 0',
+					transform: `translate(${_pos.x}px, ${_pos.y}px) scale(${_pos.scale})`,
 				}}
-				className="elements-container"
 			>
 				{loopNotes()}
 			</div>
@@ -170,24 +169,34 @@ const StandardView: React.FC<StandardProps> = (props) => {
 			>
 				<FormControl>
 					<FormLabel>Bucket</FormLabel>
-					<Input id="bucket" placeholder="Bucket" value={_note?.bucket} onChange={(event)=>{
-						setNote({
-							..._note,
-							bucket: event.currentTarget.value,
-						});
-					}} />
+					<Input
+						id="bucket"
+						placeholder="Bucket"
+						value={_note?.bucket}
+						onChange={(event) => {
+							setNote({
+								..._note,
+								bucket: event.currentTarget.value,
+							});
+						}}
+					/>
 				</FormControl>
 				<FormControl>
 					<FormLabel>Note</FormLabel>
-					<Textarea id="note" value={_note?.text} placeholder="Note" onChange={(event)=>{
-						setNote({
-							..._note,
-							text: event.currentTarget.value,
-						});
-					}} />
+					<Textarea
+						id="note"
+						value={_note?.text}
+						placeholder="Note"
+						onChange={(event) => {
+							setNote({
+								..._note,
+								text: event.currentTarget.value,
+							});
+						}}
+					/>
 				</FormControl>
 			</Edit>
-		</div>
+		</>
 	);
 };
 

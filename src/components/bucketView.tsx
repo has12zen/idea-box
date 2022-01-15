@@ -6,6 +6,7 @@ import {
 	Tooltip,
 	IconButton,
 	Stack,
+	useColorMode,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
@@ -15,6 +16,11 @@ import { overlaps } from 'src/utils/overlap';
 interface BucketViewProps {
 	notes: _NoteVAlue[];
 	onUpdateNote: (id: string, props: any) => void;
+	Position: {
+		x: number;
+		y: number;
+		scale: number;
+	};
 }
 interface RenderBucket {
 	title: string;
@@ -46,8 +52,9 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 			}
 		}
 	});
+	const _pos = props.Position;
 	const dragnote = (id: string, bucket: string) => {
-		overlaps(id, bucket, props,2);
+		overlaps(id, bucket, props, 2);
 		setBuck(bucket);
 	};
 	const childrenLoop = (bucket: string) => {
@@ -56,7 +63,7 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 			let colour = {
 				background: note.color,
 			};
-			if (keylist.includes(note.key)||note.bucket!==bucket) {
+			if (keylist.includes(note.key) || note.bucket !== bucket) {
 				return;
 			}
 			keylist.push(note.key);
@@ -99,16 +106,28 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 			);
 		});
 	};
+	const { colorMode, toggleColorMode } = useColorMode();
 
 	const bucketLoop = () => {
 		return bucketslist.map((bucket: string, i) => {
 			return (
 				<>
-					<Box backgroundColor={bucket===''?'#fff':'#808080'} className="bucket-bucketView" marginLeft={15} style={{padding:'10px',borderRadius:'15px',height:'fit-content', maxWidth:'500px'}}>
+					<Box
+						backgroundColor="#808080"
+						className="bucket-bucketView"
+						marginLeft={15}
+						color={colorMode === 'light' ? '#000' : '#fff'}
+						style={{
+							padding: '10px',
+							borderRadius: '15px',
+							height: 'fit-content',
+							maxWidth: '500px',
+						}}
+					>
 						<Flex p="1">
 							<Spacer />
 							{bucket !== '' ? (
-								<Heading fontSize={'2xl'} fontFamily={'body'} overflow='hidden'>
+								<Heading fontSize={'2xl'} fontFamily={'body'} overflow="hidden">
 									{bucket}
 								</Heading>
 							) : (
@@ -124,8 +143,17 @@ const BucetView: React.FC<BucketViewProps> = (props) => {
 			);
 		});
 	};
-
-	return <Flex>{bucketLoop()}</Flex>;
+	return (
+		<Flex
+			style={{
+				transformOrigin: '0 0',
+				transform: `translate(${_pos.x}px, ${_pos.y}px) scale(${_pos.scale})`,
+			}}
+			className="react-transform-container"
+		>
+			{bucketLoop()}
+		</Flex>
+	);
 };
 
 export default BucetView;

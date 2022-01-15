@@ -18,3 +18,12 @@ a {
 .selected{
 	border:4px solid aquamarine;
 }
+
+.react-transform-wrapper{
+	
+}
+
+.react-transform-component{
+	width: 100%;
+	height: 86vh;
+}
